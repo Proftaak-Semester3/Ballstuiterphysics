@@ -16,8 +16,6 @@ public class Screen1 implements Screen {
     public static final int SPEED = 120;
 
     Texture img;
-    Texture trashcan;
-    Texture fonties;
     float X;
     float Y;
     CollisionRect trashrect;
@@ -36,8 +34,6 @@ public class Screen1 implements Screen {
     @Override
     public void show() {
         img = new Texture("badlogic.jpg");
-        trashcan = new Texture("Trashcan.png");
-        fonties = new Texture("Fonties icon.png");
     }
 
     @Override
@@ -74,8 +70,6 @@ public class Screen1 implements Screen {
 
         game.batch.begin();
 
-        game.batch.draw(trashcan, 1150, 10, 220, 400);
-        game.batch.draw(fonties, 1500, 900, 300, 150);
         for (Bullet bullet: bullets) {
             bullet.render(game.batch);
         }
