@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Bullet;
 import com.mygdx.game.CollisionRect;
@@ -18,12 +19,16 @@ public class Screen1 implements Screen {
 
     float X;
     float Y;
+    float bulletx = 0;
+    float bullety = 0;
 
     MyGdxGame game;
 
     CollisionRect rect;
 
     ArrayList<Bullet> bullets;
+
+    BitmapFont font = new BitmapFont();
 
     public Screen1(MyGdxGame game)
     {
@@ -67,16 +72,20 @@ public class Screen1 implements Screen {
         game.batch.draw(wall, 1750, 0, 100, 900);
 
         for (Bullet bullet: bullets) {
-            bullet.render(game.batch);
-            if(rect.collidesWith(bullet.getCollisionRect()))
+            if(rect.collidesWith(bullet.getCollisionRect()) && !bullet.collided)
             {
                 Vector3 vector3 = bullet.GetVelocity();
                 Vector3 bounced = new Vector3();
-                bounced.x = -vector3.x + 5;
-                bounced.y = vector3.y;
+                bounced.x = 0 - (vector3.x / 2);
+                bounced.y = Math.round(vector3.y / 2) - 50;
+                bounced.z = vector3.z;
                 bullet.updateVelocity(bounced);
+                bullet.collided = true;
             }
+            bullet.render(game.batch);
+
         }
+        font.draw(game.batch, bulletx + " " + bullety, 600, 600);
 
         game.batch.end();
     }

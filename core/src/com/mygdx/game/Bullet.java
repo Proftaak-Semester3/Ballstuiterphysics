@@ -16,6 +16,7 @@ public class Bullet {
     private Vector3 velocity;
 
     private Texture texture;
+    public boolean collided = false;
 
     CollisionRect rect;
     double down = 0.955;
