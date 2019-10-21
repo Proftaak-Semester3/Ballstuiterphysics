@@ -4,25 +4,28 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class Bullet {
 
-    public static final int SPEED = 700;
-    private static Texture texture;
-    CollisionRect rect;
-    World world;
+    private static final int GRAVITY = -2;
+    private static final int MOVEMENT = 0;
 
-    float x, y;
+    private Vector3 position;
+    private Vector3 velocity;
+
+    private Texture texture;
+
+    CollisionRect rect;
     double down = 0.955;
     double Height = 1;
 
     public boolean remove = false;
 
-    public Bullet (float x, float y){
-        this.x = x;
-        this.y = y;
-        world = new World(new Vector2(0, -9.81f), true);
+    public Bullet (float x, float y, int power, int height){
+        position = new Vector3(x,y, 0);
+        velocity = new Vector3(power,height,0);
 
         this.rect = new CollisionRect(x, y, 80, 80);
         if(texture == null)
@@ -32,17 +35,29 @@ public class Bullet {
     }
 
     public void update(float deltaTime){
-        x = x + 10;
-        if(y > Gdx.graphics.getHeight() || x > Gdx.graphics.getWidth())
+
+        if(position.y > 0){
+            velocity.add(0, GRAVITY,0);}
+
+        velocity.scl(deltaTime);
+        position.add(velocity.x, velocity.y, 0);
+        position.add(0, velocity.y, 0);
+
+        if(position.y < 0) {
+            position.y = 0; }
+
+        velocity.scl(1/deltaTime);
+
+        if(position.y > Gdx.graphics.getHeight() || position.x > Gdx.graphics.getWidth())
         {
             remove = true;
         }
-        rect.move(x, y);
+        rect.move(position.x, position.y);
     }
 
     public void render(SpriteBatch batch)
     {
-        batch.draw(texture, x, y, 80, 80);
+        batch.draw(texture, position.x, position.y, 80, 80);
     }
 
     public CollisionRect getCollisionRect ()

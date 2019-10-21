@@ -12,9 +12,6 @@ import com.mygdx.game.MyGdxGame;
 import java.util.ArrayList;
 
 public class Screen1 implements Screen {
-
-    public static final int SPEED = 120;
-
     Texture img;
     float X;
     float Y;
@@ -27,6 +24,7 @@ public class Screen1 implements Screen {
     {
         this.game = game;
         bullets = new ArrayList<>();
+
     }
 
     @Override
@@ -40,8 +38,8 @@ public class Screen1 implements Screen {
         {
             Gdx.app.exit();
         }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            bullets.add(new Bullet(0, 2));
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            bullets.add(new Bullet(0, 2, Gdx.input.getX(), Gdx.input.getY()));
         }
 
         ArrayList<Bullet> bulletToRemove = new ArrayList<>();
