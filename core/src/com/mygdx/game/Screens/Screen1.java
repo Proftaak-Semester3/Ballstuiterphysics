@@ -18,7 +18,6 @@ public class Screen1 implements Screen {
     Texture img;
     float X;
     float Y;
-    CollisionRect trashrect;
 
     MyGdxGame game;
 
@@ -28,7 +27,6 @@ public class Screen1 implements Screen {
     {
         this.game = game;
         bullets = new ArrayList<>();
-        trashrect = new CollisionRect(1150, 10, 220, 350);
     }
 
     @Override
@@ -51,13 +49,6 @@ public class Screen1 implements Screen {
         for (Bullet bullet: bullets) {
             bullet.update(delta);
             if(bullet.remove)
-            {
-                bulletToRemove.add(bullet);
-            }
-        }
-
-        for (Bullet bullet: bullets) {
-            if(bullet.getCollisionRect().collidesWith(trashrect))
             {
                 bulletToRemove.add(bullet);
             }
