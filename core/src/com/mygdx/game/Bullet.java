@@ -43,8 +43,7 @@ public class Bullet {
         position.add(velocity.x, velocity.y, 0);
         position.add(0, velocity.y, 0);
 
-        if(position.y < 0) {
-            position.y = 0; }
+        if(position.y < 0) { position.y = 0; }
 
         velocity.scl(1/deltaTime);
 
@@ -63,5 +62,15 @@ public class Bullet {
     public CollisionRect getCollisionRect ()
     {
         return rect;
+    }
+
+    public Vector3 GetVelocity()
+    {
+        return velocity;
+    }
+
+    public void updateVelocity(Vector3 velocity)
+    {
+        this.velocity = velocity;
     }
 }
