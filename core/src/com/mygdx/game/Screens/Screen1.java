@@ -3,7 +3,9 @@ package com.mygdx.game.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector3;
@@ -25,6 +27,7 @@ public class Screen1 implements Screen {
     MyGdxGame game;
 
     CollisionRect rect;
+    CollisionRect groundrect;
 
     ArrayList<Bullet> bullets;
 
@@ -36,6 +39,7 @@ public class Screen1 implements Screen {
         bullets = new ArrayList<>();
         wall =  new Texture("BrickWall.jpg");
         rect = new CollisionRect(1750, 0, 100, 900);
+        groundrect = new CollisionRect(0,0, 1920, 1);
     }
 
     @Override
@@ -82,12 +86,20 @@ public class Screen1 implements Screen {
                 bullet.updateVelocity(bounced);
                 bullet.collided = true;
             }
+            if(groundrect.collidesWith(bullet.getCollisionRect()))
+            {
+                Vector3 vector3 = bullet.GetVelocity();
+                Vector3 bounced = new Vector3();
+                bounced.x = vector3.x;
+                bounced.y = 0 - (vector3.y + 80);
+                bounced.z = vector3.z;
+                bullet.updateVelocity(bounced);
+            }
             bullet.render(game.batch);
 
         }
-        font.draw(game.batch, bulletx + " " + bullety, 600, 600);
-
         game.batch.end();
+
     }
 
     @Override

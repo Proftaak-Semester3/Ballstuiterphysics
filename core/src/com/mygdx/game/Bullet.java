@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class Bullet {
 
-    private static final int GRAVITY = -2;
+    private static final int GRAVITY = -10;
     private static final int MOVEMENT = 0;
 
     private Vector3 position;
@@ -18,9 +18,11 @@ public class Bullet {
     private Texture texture;
     public boolean collided = false;
 
+    public boolean ground = false;
+
     CollisionRect rect;
-    double down = 0.955;
-    double Height = 1;
+
+    int turn = 0;
 
     public boolean remove = false;
 
@@ -29,10 +31,7 @@ public class Bullet {
         velocity = new Vector3(power,height,0);
 
         this.rect = new CollisionRect(x, y, 80, 80);
-        if(texture == null)
-        {
-            texture = new Texture("Tennis-Ball.png");
-        }
+        texture = new Texture("Tennis-Ball.png");
     }
 
     public void update(float deltaTime){
@@ -44,7 +43,14 @@ public class Bullet {
         position.add(velocity.x, velocity.y, 0);
         position.add(0, velocity.y, 0);
 
-        if(position.y < 0) { position.y = 0; }
+        if(position.y < 0) {
+            position.y = 0;
+            ground = true;
+        }
+        else
+        {
+            ground = false;
+        }
 
         velocity.scl(1/deltaTime);
 

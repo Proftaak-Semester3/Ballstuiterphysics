@@ -9,7 +9,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = 1920;
 		config.height = 1080;
-		config.fullscreen = false;
+		config.fullscreen = true;
 		config.foregroundFPS = 60;
 		new LwjglApplication(new MyGdxGame(), config);
 	}
